@@ -6,9 +6,11 @@
             <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/i18n_hr.properties</file>
             <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/i18n_en.properties</file>
             <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/web/registracija.xhtml</file>
+            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/web/login.xhtml</file>
+            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/web/zrna/Login.java</file>
+            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/rest/klijenti/UserRest.java</file>
             <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/web/index.xhtml</file>
-            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/web/zrna/Lokalizacija.java</file>
-            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/web/zrna/Registracija.java</file>
+            <file>file:/E:/FOI/Diplomski/2.%20semestar/NWTiS/Zadace/projekt/ljakopov_aplikacija_2/ljakopov_aplikacija_2-war/src/java/org/foi/nwtis/ljakopov/rest/klijenti/UserRestKorisnickoIme.java</file>
         </group>
     </open-files>
 </project-private>

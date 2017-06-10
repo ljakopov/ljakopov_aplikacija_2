@@ -12,11 +12,11 @@
             <ui:composition template="./predlozak.xhtml">
 
                 <ui:define name="naslov">
-                    #{m.registracija_naslov}
+                    naslov
                 </ui:define>
 
                 <ui:define name="top">
-                    #{m.registracija_naslov}
+                    top
                 </ui:define>
 
                 <ui:define name="left">
@@ -25,21 +25,15 @@
 
                 <ui:define name="content">
                     <h:panelGrid id="greske">
-                        #{registracija.prikazOdgovora}
+                        #{login.greska}
                     </h:panelGrid>
                     <h:form>
                         <h:panelGrid columns="2" cellpadding="7">
-                            <h:outputLabel value="#{m.registracija_korisnickoIme}" />
-                            <p:inputText id="korisnickoIme" value="#{registracija.korisnickoIme}"/>
-                            <h:outputText value="#{m.registracija_lozinka}" />
-                            <p:password id="lozinka" value="#{registracija.lozinka}" feedback="true" />
-                            <h:outputLabel value="#{m.registracija_lozinkaPonovljena}" />
-                            <p:password id="ponovljenaLozinka" value="#{registracija.ponovljenaLozinka}" />
-                            <h:outputLabel value="#{m.registracija_prezime}" />
-                            <p:inputText id="prezime" value="#{registracija.prezime}"/>
-                            <h:outputLabel value="#{m.registracija_email}" />
-                            <p:inputText id="email" value="#{registracija.email}"/>
-                            <p:commandButton value="#{m.registracija_spremi}" action="#{registracija.dodajKorisnika()}" ajax="false" icon="ui-icon-check" validateClient="true">
+                            <h:outputLabel value="#{m.login_korisnickoIme}" />
+                            <p:inputText id="korisnickoIme" value="#{login.korisnickoIme}"/>
+                            <h:outputLabel value="#{m.login_lozinka}" />
+                            <p:password id="ponovljenaLozinka" value="#{login.lozinka}" />
+                            <p:commandButton value="#{m.login_prijava}" action="#{login.logiranje()}" ajax="false" icon="ui-icon-check" validateClient="true">
                                 <f:ajax render="greske"/>
                             </p:commandButton>
                         </h:panelGrid>
