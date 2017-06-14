@@ -13,32 +13,32 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author Lovro
  */
-public class UserRestKorisnickoIme {
-    
-     public String loginKorisnika(String korisnickoIme){
-       UserRESTResource_JerseyClient userRESTResource_JerseyClient = new UserRESTResource_JerseyClient(korisnickoIme);
-       return userRESTResource_JerseyClient.getJson();
-    }
-     
-     public static String azurirajKorisnikaJson(String korisnickoIme, Object jsonObject){
-         UserRESTResource_JerseyClient userRESTResource_JerseyClient = new UserRESTResource_JerseyClient(korisnickoIme);
-         return userRESTResource_JerseyClient.putJson(jsonObject);
-     }
+public class MeteoRestId {
 
-    static class UserRESTResource_JerseyClient {
+    public static String dohvatiUredjaj(String id){
+        MeteoRESTResource_JerseyClient meteoRESTResource_JerseyClient = new MeteoRESTResource_JerseyClient(id);
+        return meteoRESTResource_JerseyClient.getJson();
+    }
+    
+    public static String azurirajIoTUredjaj(String id, Object jsonObject){
+        MeteoRESTResource_JerseyClient meteoRESTResource_JerseyClient = new MeteoRESTResource_JerseyClient(id);
+        return meteoRESTResource_JerseyClient.putJson(jsonObject);
+    }
+    
+    static class MeteoRESTResource_JerseyClient {
 
         private WebTarget webTarget;
         private Client client;
         private static final String BASE_URI = "http://localhost:8084/ljakopov_aplikacija_1/webresources";
 
-        public UserRESTResource_JerseyClient(String korisnickoIme) {
+        public MeteoRESTResource_JerseyClient(String id) {
             client = javax.ws.rs.client.ClientBuilder.newClient();
-            String resourcePath = java.text.MessageFormat.format("userREST/{0}", new Object[]{korisnickoIme});
+            String resourcePath = java.text.MessageFormat.format("meteoRESTs/{0}", new Object[]{id});
             webTarget = client.target(BASE_URI).path(resourcePath);
         }
 
-        public void setResourcePath(String korisnickoIme) {
-            String resourcePath = java.text.MessageFormat.format("userREST/{0}", new Object[]{korisnickoIme});
+        public void setResourcePath(String id) {
+            String resourcePath = java.text.MessageFormat.format("meteoRESTs/{0}", new Object[]{id});
             webTarget = client.target(BASE_URI).path(resourcePath);
         }
 
@@ -59,6 +59,7 @@ public class UserRestKorisnickoIme {
             client.close();
         }
     }
+    
     
     
 }

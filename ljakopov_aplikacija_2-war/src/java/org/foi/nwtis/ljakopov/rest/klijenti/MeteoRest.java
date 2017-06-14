@@ -13,31 +13,30 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author ljakopov
  */
-public class UserRest {
-    
-    public String unesiKorisnika(Object jsonObject){
-        UserRESTsResourceContainerClient userRESTsResourceContainerClient = new UserRESTsResourceContainerClient();
-        return userRESTsResourceContainerClient.postJson(jsonObject);
+public class MeteoRest {
+
+    public static String preuzmiSveUredjaje() {
+        MeteoRESTResourceContainer_JerseyClient meteoRESTResourceContainer_JerseyClient = new MeteoRESTResourceContainer_JerseyClient();
+        return meteoRESTResourceContainer_JerseyClient.getJson();
     }
     
-    public String dajSveKorisnike(){
-        UserRESTsResourceContainerClient userRESTsResourceContainerClient = new UserRESTsResourceContainerClient();
-        return userRESTsResourceContainerClient.getJson();      
+    public static String dodajUredjaj(Object jsObject){
+        MeteoRESTResourceContainer_JerseyClient meteoRESTResourceContainer_JerseyClient = new MeteoRESTResourceContainer_JerseyClient();
+        return meteoRESTResourceContainer_JerseyClient.postJson(jsObject);
     }
 
-    static class UserRESTsResourceContainerClient {
+    static class MeteoRESTResourceContainer_JerseyClient {
 
         private WebTarget webTarget;
         private Client client;
         private static final String BASE_URI = "http://localhost:8084/ljakopov_aplikacija_1/webresources";
 
-        public UserRESTsResourceContainerClient() {
+        public MeteoRESTResourceContainer_JerseyClient() {
             client = javax.ws.rs.client.ClientBuilder.newClient();
-            webTarget = client.target(BASE_URI).path("userREST");
+            webTarget = client.target(BASE_URI).path("meteoRESTs");
         }
 
         public String postJson(Object requestEntity) throws ClientErrorException {
-            System.out.println("ISPIS SA: " + requestEntity.toString());
             return webTarget.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
         }
 
@@ -50,7 +49,5 @@ public class UserRest {
             client.close();
         }
     }
-    
-    
-    
+
 }

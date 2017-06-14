@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <f:view locale="#{lokalizacija.odabraniJezik}">
+        <body>
+
+            <ui:composition template="./predlozak.xhtml">
+
+                <ui:define name="naslov">
+                    #{m.pregledKorisnika_naslov}
+                </ui:define>
+
+                <ui:define name="top">
+                    top
+                </ui:define>
+
+                <ui:define name="left">
+                    left
+                </ui:define>
+
+                <ui:define name="content">
+                    <h:form>
+                        <h:panelGrid columns="2" cellpadding="7">
+                            <h:outputLabel value="#{m.pregledKorisnika_id}" />
+                            <p:inputText id="id" value="#{korisnik.id}" readonly="true"/>
+                            <h:outputText value="#{m.pregledKorisnika_lozinka}" />
+                            <p:password id="lozinka" value="#{korisnik.lozinka}" feedback="true" />
+                            <h:outputLabel value="#{m.pregledKorisnika_lozinkaPonovljena}" />
+                            <p:password id="ponovljenaLozinka" value="#{korisnik.ponovljenaLozinka}" />
+                            <h:outputLabel value="#{m.pregledKorisnika_prezime}" />
+                            <p:inputText id="prezime" value="#{korisnik.prezime}"/>
+                            <h:outputLabel value="#{m.pregledKorisnika_email}" />
+                            <p:inputText id="email" value="#{korisnik.email}"/>
+                            <p:commandButton value="#{m.pregledKorisnika_spremi}" action="#{korisnik.azurirajPodatkeKorisnika()}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+                        </h:panelGrid>
+                    </h:form>
+                    <p:dataTable id="popisKorisnika" value="#{korisnik.podaciSvihKorisnika}" var="podaci" 
+                                 rows="#{korisnik.korisniciPoStranici}" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}
+                                 {RowsPerPageDropdown}">
+
+                        <p:column>
+                            <f:facet name="header"> #{m.pregledKorisnika_id} </f:facet>
+                            <h:outputText value="#{podaci.ID}" />    
+
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header"> #{m.pregledKorisnika_korisnickoIme} </f:facet>
+                            <h:outputText value="#{podaci.korisnickoIme}" />    
+
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header"> #{m.pregledKorisnika_prezime} </f:facet>
+                            <h:outputText value=" #{podaci.prezime}" />    
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header"> #{m.pregledKorisnika_email} </f:facet>
+                            <h:outputText value=" #{podaci.email}" />    
+
+                        </p:column>
+
+                    </p:dataTable>
+                </ui:define>
+
+                <ui:define name="bottom">
+                    bottom
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

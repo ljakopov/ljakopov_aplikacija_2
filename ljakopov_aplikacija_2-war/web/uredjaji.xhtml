@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <f:view locale="#{lokalizacija.odabraniJezik}">
+
+        <body>
+
+            <ui:composition template="./predlozak.xhtml">
+
+                <ui:define name="naslov">
+                    #{m.uredjaji_naslov}
+                </ui:define>
+
+                <ui:define name="top">
+                    top
+                </ui:define>
+
+                <ui:define name="left">
+                    left
+                </ui:define>
+
+                <ui:define name="content">
+                    <h:panelGrid id="greske">
+                        #{odabirUredjaja.greska}
+                    </h:panelGrid>
+                    <h:form>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel for="noviId" value="#{m.uredjaji_idUredjaja}"/>
+                            <h:inputText id="noviId" value="#{odabirUredjaja.noviId}"/>
+                            <h:outputText value="" />
+                            <h:outputLabel for="noviNaziv" value="#{m.uredjaji_naziv}"/>
+                            <h:inputText id="noviNaziv" value="#{odabirUredjaja.noviNaziv}"/>
+                            <h:outputText value="" />
+                            <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
+                            <h:inputText id="noviAdresa" value="#{odabirUredjaja.noviAdresa}" />
+                            <h:outputText value="" />
+                            <h:commandButton value="Dodaj IoT Uređaj" 
+                                             action="#{odabirUredjaja.dodajIoTUredaj()}">
+                                <f:ajax execute="noviId noviNaziv noviAdresa" render="uredjaji greske" />
+                            </h:commandButton>
+
+                        </h:panelGrid>
+                        <div class="ui-g">
+                            <div class="ui-g-4">
+                                <h:outputLabel value="#{m.uredjaji_labelaPopisSvihUredjaja}" />
+                                <h:panelGrid columns="2">
+                                    <h:selectOneListbox id="uredjaji" value="#{odabirUredjaja.id}" size="7">
+                                        <f:selectItems value="#{odabirUredjaja.uredjaji}"
+                                                       var="uredaj" 
+                                                       itemLabel="#{uredaj.naziv}"
+                                                       itemValue="#{uredaj.id}" />
+                                    </h:selectOneListbox>
+                                    <h:commandButton value="#{m.uredjaji_pogledajUredjaj}" action="#{odabirUredjaja.pogledajUredjaj()}">
+                                        <f:ajax execute="uredjaji" render="panelGridPrikaz greske naslovAzuriranja"/>
+                                    </h:commandButton>
+                                </h:panelGrid>
+                            </div>
+                            <div class="ui-g-4">
+                                <h:panelGrid id="panelGridPrikaz" columns="2">
+                                    <h:outputLabel value="#{m.uredjaji_idUredjaja}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                    <p:inputText id="id" value="#{odabirUredjaja.id}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;" readonly="true"/>
+                                    <h:outputLabel value="#{m.uredjaji_naziv}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                    <p:inputText id="naziv" value="#{odabirUredjaja.naziv}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
+                                    <h:outputLabel value="#{m.uredjaji_adresa}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                    <p:inputText id="adresa" value="#{odabirUredjaja.adresa}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
+                                    <h:commandButton value="#{m.uredjaji_azurirajUredjaj}" action="#{odabirUredjaja.azurirajUredjaj()}" rendered="#{odabirUredjaja.azuriranje}">
+                                        <f:ajax execute="uredjaji panelGridPrikaz" render="panelGridPrikaz greske uredjaji"/>
+                                    </h:commandButton>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </h:form>
+                </ui:define>
+
+                <ui:define name="bottom">
+                    bottom
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>
