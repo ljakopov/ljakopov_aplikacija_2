@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <f:view locale="#{lokalizacija.odabraniJezik}">
+
+        <h:head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+        </h:head>
+        <body>
+            <div class="container-fluid">
+
+                <ui:composition template="./predlozak.xhtml">
+
+                    <ui:define name="naslov">
+                        #{m.iotMaster_naslov}
+                    </ui:define>
+
+                    <ui:define name="top">
+                        <h1>#{m.iotMaster_naslov}</h1>
+                    </ui:define>
+
+                    <ui:define name="left">
+                        left
+                    </ui:define>
+
+                    <ui:define name="content">
+                        <h:form>
+                            <h:commandButton value="#{m.iotMaster_iotMasterLoad}" action="#{upravljanjeIoTMasterom.iotMasterLoad()}">
+                                <f:ajax />
+                            </h:commandButton>
+                            <h:commandButton value="#{m.iotMaster_iotMasterClear}" action="#{upravljanjeIoTMasterom.iotMasterClear()}">
+                                <f:ajax />
+                            </h:commandButton>
+                            <h:commandButton value="#{m.iotMaster_iotMasterList}" action="#{upravljanjeIoTMasterom.iotMasterList()}">
+                                <f:ajax render="@all" />
+                            </h:commandButton>
+                        </h:form>
+                        <div class="ui-g">
+                            <div class="ui-g-4">
+                                <p:panelGrid columns="1" layout="grid" id="ispisUredjaja">
+                                    <h:dataTable value="#{upravljanjeIoTMasterom.listaUredjaji}" var="uredjaj" class="table table-striped">
+                                        <h:column>
+                                            <f:facet name="header">#{m.iotMaster_iotMasterLabela_Id}</f:facet>
+                                            <h:outputText value="#{uredjaj.labela}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">#{m.iotMaster_iotMasterLabela_Naziv}</f:facet>
+                                            <h:outputText value="#{uredjaj.vrijednost}"/>
+                                        </h:column>
+                                    </h:dataTable>
+                                </p:panelGrid>
+                            </div>
+                            <div class="ui-g-4">
+                                <h:form>
+                                    <h:panelGrid id="panelGridIspisSvihUredjaja">
+                                        <h:selectOneListbox id="uredjaji" value="#{upravljanjeIoTMasterom.idUredjaString}" size="7">
+                                            <f:selectItems value="#{upravljanjeIoTMasterom.listaUredjaji}"
+                                                           var="uredaj" 
+                                                           itemLabel="#{uredaj.vrijednost}"
+                                                           itemValue="#{uredaj.labela}" />
+                                        </h:selectOneListbox>
+                                    </h:panelGrid>
+                                    <br />
+                                    <h:commandButton value="#{m.iotMaster_iotMasterWorkID}" action="#{upravljanjeIoTMasterom.iotMasterWorkUredjaj()}"/>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterWaitID}" action="#{upravljanjeIoTMasterom.iotMasterWaitUredjaj()}"/>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterRemoveID}" action="#{upravljanjeIoTMasterom.iotMasterRemoveUredjaj()}"/>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterStatusID}" action="#{upravljanjeIoTMasterom.iotMasterStatusUredjaj()}"/>
+                                </h:form>
+                            </div>
+                            <div class="ui-g-4">
+                                <h:form>
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel for="noviId" value="#{m.uredjaji_idUredjaja}"/>
+                                        <h:inputText id="noviId" value="#{upravljanjeIoTMasterom.noviId}"/>
+                                        <h:outputText value="" />
+                                        <h:outputLabel for="noviNaziv" value="#{m.uredjaji_naziv}"/>
+                                        <h:inputText id="noviNaziv" value="#{upravljanjeIoTMasterom.noviNaziv}"/>
+                                        <h:outputText value="" />
+                                        <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
+                                        <h:inputText id="noviAdresa" value="#{upravljanjeIoTMasterom.noviAdresa}" />
+                                        <h:outputText value="" />
+                                        <h:commandButton value="Dodaj IoT Uređaj" action="#{upravljanjeIoTMasterom.iotMasterAddUredjaj()}" />
+                                    </h:panelGrid>
+                                </h:form>
+                            </div>
+                        </div>
+                    </ui:define>
+
+                    <ui:define name="bottom">
+                        bottom
+                    </ui:define>
+
+                </ui:composition>
+
+            </div>
+        </body>
+    </f:view>
+</html>

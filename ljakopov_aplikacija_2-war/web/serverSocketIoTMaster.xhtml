@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <f:view locale="#{lokalizacija.odabraniJezik}">
+        <h:head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+        </h:head>
+        <body>
+            <div class="container-fluid">
+
+                <ui:composition template="./predlozak.xhtml">
+
+                    <ui:define name="naslov">
+                        #{m.serverSocketIoTMaster_naslov}
+                    </ui:define>
+
+                    <ui:define name="top">
+                        <h1>#{m.serverSocketIoTMaster_naslov}</h1>
+                    </ui:define>
+
+                    <ui:define name="left">
+
+                    </ui:define>
+
+                    <ui:define name="content">
+                        <h:form>
+                            <p:panel header="#{m.serverSocketIoTMaster_serverSocket}">
+                                <div class="ui-g">
+                                    <div class="ui-g-4">
+                                        <p:panelGrid columns="4" layout="grid">  
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_start}" action="#{serverSocketIoTMaster.start()}" class="btn btn-outline-success"/>
+      
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_pause}" action="#{serverSocketIoTMaster.pause()}" class="btn btn-outline-warning"/>
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_stop}" action="#{serverSocketIoTMaster.stop()}" class="btn btn-outline-danger" />
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_status}" action="#{serverSocketIoTMaster.status()}" class="btn btn-outline-info"> 
+                                                <f:ajax render="status"/>
+                                            </h:commandButton>
+                                            <h:panelGrid id="status">
+                                                #{serverSocketIoTMaster.status}
+                                            </h:panelGrid>
+                                        </p:panelGrid>
+                                    </div>
+                                </div>
+                            </p:panel>
+                            <p:panel header="#{m.serverSocketIoTMaster_iotMaster}">
+                                <div class="ui-g">
+                                    <div class="ui-g-6">
+                                        <p:panelGrid columns="5" layout="grid">
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_iotMasterStart}" action="#{serverSocketIoTMaster.iotMasterStart()}" class="btn btn-outline-success"/>
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_iotMasterStop}" action="#{serverSocketIoTMaster.iotMasterStop()}" class="btn btn-outline-danger" />
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_iotMasterWork}" action="#{serverSocketIoTMaster.iotMasterWork()}" class="btn btn-outline-primary" />
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_iotMasterWait}" action="#{serverSocketIoTMaster.iotMasterWait()}" class="btn btn-outline-warning" />
+                                            <h:commandButton value="#{m.serverSocketIoTMaster_iotMasterStatus}" action="#{serverSocketIoTMaster.iotMasterStatus()}" class="btn btn-outline-info"/>
+                                        </p:panelGrid>
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </h:form>
+                    </ui:define>
+
+                    <ui:define name="bottom">
+                        bottom
+                    </ui:define>
+
+                </ui:composition>
+
+            </div>
+        </body>
+    </f:view>
+</html>

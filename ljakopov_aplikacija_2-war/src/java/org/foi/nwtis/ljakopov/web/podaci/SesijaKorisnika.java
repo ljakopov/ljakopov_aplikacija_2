@@ -24,10 +24,10 @@ public class SesijaKorisnika {
         return session.getAttribute("korisnickoIme").toString();
     }
 
-    public static String dajKorisnickiId() {
+    public static String dajKorisnickuLozinku() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
-        return session.getAttribute("id").toString();
+        return session.getAttribute("lozinka").toString();
     }
 
 }

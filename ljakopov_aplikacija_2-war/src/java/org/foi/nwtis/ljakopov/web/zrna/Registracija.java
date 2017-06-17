@@ -188,6 +188,7 @@ public class Registracija {
                     System.out.println("USPJEŠNO STE LOGIRANNI");
                     HttpSession session = SesijaKorisnika.dodajSesiju();
                     session.setAttribute("korisnickoIme", prijavaKorisnickoIme);
+                    session.setAttribute("lozinka", prijavaLozinka);
                     System.out.println("ISPIS SESIJE: " + SesijaKorisnika.dajKorisnickoIme());
                 }
             } else {

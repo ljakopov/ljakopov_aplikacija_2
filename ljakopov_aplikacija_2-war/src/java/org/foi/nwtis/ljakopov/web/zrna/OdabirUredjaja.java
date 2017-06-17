@@ -132,6 +132,7 @@ public class OdabirUredjaja implements Serializable {
     }
 
     public void preuzmiSveUredjaje() {
+        uredjaji.clear();
         String jsonSviUredjaji = MeteoRest.preuzmiSveUredjaje();
         JsonReader reader = Json.createReader(new StringReader(jsonSviUredjaji));
         JsonArray array = reader.readArray();
