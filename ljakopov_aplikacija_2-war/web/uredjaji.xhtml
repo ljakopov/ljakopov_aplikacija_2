@@ -7,81 +7,134 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <f:view locale="#{lokalizacija.odabraniJezik}">
 
+        <h:head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+        </h:head>
         <body>
+            <div class="container-fluid">
 
-            <ui:composition template="./predlozak.xhtml">
 
-                <ui:define name="naslov">
-                    #{m.uredjaji_naslov}
-                </ui:define>
+                <ui:composition template="./predlozak.xhtml">
 
-                <ui:define name="top">
-                    top
-                </ui:define>
+                    <ui:define name="naslov">
+                        #{m.uredjaji_naslov}
+                    </ui:define>
 
-                <ui:define name="left">
-                    left
-                </ui:define>
+                    <ui:define name="top">
+                        <h1>#{m.uredjaji_naslov}</h1>
+                    </ui:define>
 
-                <ui:define name="content">
-                    <h:panelGrid id="greske">
-                        #{odabirUredjaja.greska}
-                    </h:panelGrid>
-                    <h:form>
-                        <h:panelGrid columns="3">
-                            <h:outputLabel for="noviId" value="#{m.uredjaji_idUredjaja}"/>
-                            <h:inputText id="noviId" value="#{odabirUredjaja.noviId}"/>
-                            <h:outputText value="" />
-                            <h:outputLabel for="noviNaziv" value="#{m.uredjaji_naziv}"/>
-                            <h:inputText id="noviNaziv" value="#{odabirUredjaja.noviNaziv}"/>
-                            <h:outputText value="" />
-                            <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
-                            <h:inputText id="noviAdresa" value="#{odabirUredjaja.noviAdresa}" />
-                            <h:outputText value="" />
-                            <h:commandButton value="Dodaj IoT Uređaj" 
-                                             action="#{odabirUredjaja.dodajIoTUredaj()}">
-                                <f:ajax execute="noviId noviNaziv noviAdresa" render="uredjaji greske" />
-                            </h:commandButton>
+                    <ui:define name="left">
+                        left
+                    </ui:define>
 
+                    <ui:define name="content">
+                        <h:panelGrid id="greske">
+                            #{odabirUredjaja.greska}
                         </h:panelGrid>
-                        <div class="ui-g">
-                            <div class="ui-g-4">
-                                <h:outputLabel value="#{m.uredjaji_labelaPopisSvihUredjaja}" />
-                                <h:panelGrid columns="2">
-                                    <h:selectOneListbox id="uredjaji" value="#{odabirUredjaja.id}" size="7">
-                                        <f:selectItems value="#{odabirUredjaja.uredjaji}"
-                                                       var="uredaj" 
-                                                       itemLabel="#{uredaj.naziv}"
-                                                       itemValue="#{uredaj.id}" />
-                                    </h:selectOneListbox>
-                                    <h:commandButton value="#{m.uredjaji_pogledajUredjaj}" action="#{odabirUredjaja.pogledajUredjaj()}">
-                                        <f:ajax execute="uredjaji" render="panelGridPrikaz greske naslovAzuriranja"/>
-                                    </h:commandButton>
-                                </h:panelGrid>
+                        <h:form>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="noviId" value="#{m.uredjaji_idUredjaja}"/>
+                                <h:inputText id="noviId" value="#{odabirUredjaja.noviId}"/>
+                                <h:outputText value="" />
+                                <h:outputLabel for="noviNaziv" value="#{m.uredjaji_naziv}"/>
+                                <h:inputText id="noviNaziv" value="#{odabirUredjaja.noviNaziv}"/>
+                                <h:outputText value="" />
+                                <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
+                                <h:inputText id="noviAdresa" value="#{odabirUredjaja.noviAdresa}" />
+                                <h:outputText value="" />
+                                <h:commandButton value="Dodaj IoT Uređaj" 
+                                                 action="#{odabirUredjaja.dodajIoTUredaj()}">
+                                    <f:ajax execute="noviId noviNaziv noviAdresa" render="uredjaji greske" />
+                                </h:commandButton>
+
+                            </h:panelGrid>
+                            <div class="ui-g">
+                                <div class="ui-g-4">
+                                    <h:outputLabel value="#{m.uredjaji_labelaPopisSvihUredjaja}" />
+                                    <h:panelGrid columns="2">
+                                        <h:selectOneListbox id="uredjaji" value="#{odabirUredjaja.id}" size="7">
+                                            <f:selectItems value="#{odabirUredjaja.uredjaji}"
+                                                           var="uredaj" 
+                                                           itemLabel="#{uredaj.naziv}"
+                                                           itemValue="#{uredaj.id}" />
+                                        </h:selectOneListbox>
+                                        <h:commandButton value="#{m.uredjaji_pogledajUredjaj}" action="#{odabirUredjaja.pogledajUredjaj()}">
+                                            <f:ajax execute="uredjaji" render="panelGridPrikaz greske naslovAzuriranja"/>
+                                        </h:commandButton>
+                                    </h:panelGrid>
+                                </div>
+                                <div class="ui-g-4">
+                                    <h:panelGrid id="panelGridPrikaz" columns="2">
+                                        <h:outputLabel value="#{m.uredjaji_idUredjaja}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                        <p:inputText id="id" value="#{odabirUredjaja.id}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;" readonly="true"/>
+                                        <h:outputLabel value="#{m.uredjaji_naziv}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                        <p:inputText id="naziv" value="#{odabirUredjaja.naziv}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
+                                        <h:outputLabel value="#{m.uredjaji_adresa}" rendered="#{odabirUredjaja.azuriranje}"/>
+                                        <p:inputText id="adresa" value="#{odabirUredjaja.adresa}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
+                                        <h:commandButton value="#{m.uredjaji_azurirajUredjaj}" action="#{odabirUredjaja.azurirajUredjaj()}" rendered="#{odabirUredjaja.azuriranje}">
+                                            <f:ajax execute="uredjaji panelGridPrikaz" render="panelGridPrikaz greske uredjaji"/>
+                                        </h:commandButton>
+                                    </h:panelGrid>
+                                </div>
                             </div>
-                            <div class="ui-g-4">
-                                <h:panelGrid id="panelGridPrikaz" columns="2">
-                                    <h:outputLabel value="#{m.uredjaji_idUredjaja}" rendered="#{odabirUredjaja.azuriranje}"/>
-                                    <p:inputText id="id" value="#{odabirUredjaja.id}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;" readonly="true"/>
-                                    <h:outputLabel value="#{m.uredjaji_naziv}" rendered="#{odabirUredjaja.azuriranje}"/>
-                                    <p:inputText id="naziv" value="#{odabirUredjaja.naziv}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
-                                    <h:outputLabel value="#{m.uredjaji_adresa}" rendered="#{odabirUredjaja.azuriranje}"/>
-                                    <p:inputText id="adresa" value="#{odabirUredjaja.adresa}" rendered="#{odabirUredjaja.azuriranje}" style="width: 300px;"/>
-                                    <h:commandButton value="#{m.uredjaji_azurirajUredjaj}" action="#{odabirUredjaja.azurirajUredjaj()}" rendered="#{odabirUredjaja.azuriranje}">
-                                        <f:ajax execute="uredjaji panelGridPrikaz" render="panelGridPrikaz greske uredjaji"/>
-                                    </h:commandButton>
-                                </h:panelGrid>
+                            <div class="ui-g">
+                                <div class="ui-g-4">
+                                    <h:panelGrid>
+                                        <h:commandButton value="#{m.uredjaji_pogledajAdresuUredjaja}" action="#{odabirUredjaja.dajAdresu()}" >
+                                            <f:ajax execute="uredjaji" render="adresaZaUredjaj"/>
+                                        </h:commandButton>
+                                        <h:commandButton value="#{m.uredjaji_pogledajVazecePodatkeUredjaja}" action="#{odabirUredjaja.dajVazecePodatke()}" >
+                                            <f:ajax execute="uredjaji" render="vrijemeZaUredjaj" />
+                                        </h:commandButton>
+                                        <h:commandButton value="#{m.uredjaji_pogledajZadnjiPodatak}" action="#{odabirUredjaja.dajZadnjiPodatakZaUredjaj()}" />
+                                    </h:panelGrid>
+                                </div>
+                                <div class="ui-g-4">
+                                    <h:panelGrid  columns="1" id="adresaZaUredjaj">
+                                        <h:outputLabel value="#{m.uredjaji_adresa}" rendered="#{odabirUredjaja.prikazIspisAdrese}"/>
+                                        <p:inputText value="#{odabirUredjaja.adresaUredjaja}" style="width: 480px;" rendered="#{odabirUredjaja.prikazIspisAdrese}" readonly="true"/>
+                                    </h:panelGrid>
+                                </div>
                             </div>
-                        </div>
-                    </h:form>
-                </ui:define>
+                            <h:panelGrid  columns="1" id="vrijemeZaUredjaj">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>Username</th>
+                                            <th>Username</th>
+                                            <th>Username</th>
+                                            <th>Username</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#{odabirUredjaja.meteoPodaci.temperatureValue}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.temperatureMax}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.temperatureMin}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.humidityValue}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.pressureValue}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.windDirectionValue}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.weatherNumber}</td>
+                                            <td>#{odabirUredjaja.meteoPodaci.lastUpdate}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </h:panelGrid>
+                        </h:form>
+                    </ui:define>
 
-                <ui:define name="bottom">
-                    bottom
-                </ui:define>
+                    <ui:define name="bottom">
+                        bottom
+                    </ui:define>
 
-            </ui:composition>
-
+                </ui:composition>
+            </div>
         </body>
     </f:view>
 </html>

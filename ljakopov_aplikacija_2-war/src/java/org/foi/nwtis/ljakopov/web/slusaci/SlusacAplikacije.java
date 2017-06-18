@@ -16,6 +16,7 @@ import org.foi.nwtis.ljakopov.konfiguracije.KonfiguracijaApstraktna;
 import org.foi.nwtis.ljakopov.konfiguracije.NeispravnaKonfiguracija;
 import org.foi.nwtis.ljakopov.konfiguracije.NemaKonfiguracije;
 import org.foi.nwtis.ljakopov.konfiguracije.bp.BP_Konfiguracija;
+import org.foi.nwtis.ljakopov.zrna.SingSessionBean;
 
 /**
  * Web application lifecycle listener.
@@ -40,6 +41,16 @@ public class SlusacAplikacije implements ServletContextListener {
         Konfiguracija konf = null;
         try {
             konf = KonfiguracijaApstraktna.preuzmiKonfiguraciju(datoteka);
+            
+            SingSessionBean.intervalDretve = Integer.parseInt(konf.dajPostavku("mail.timeSecThread"));
+            SingSessionBean.server = konf.dajPostavku("mail.server");
+            SingSessionBean.port = Integer.parseInt(konf.dajPostavku("mail.port"));
+            SingSessionBean.korisnickoIme = konf.dajPostavku("mail.usernameThread");
+            SingSessionBean.lozinka = konf.dajPostavku("mail.passwordThread");
+            SingSessionBean.nwtisPoruke = konf.dajPostavku("mail.folderNWTiS");
+            SingSessionBean.neNwtisPoruke = konf.dajPostavku("mail.folderOther");
+
+            
             context.setAttribute("Mail_Konfig", konf);
         } catch (NemaKonfiguracije | NeispravnaKonfiguracija ex) {
             Logger.getLogger(SlusacAplikacije.class.getName()).log(Level.SEVERE, null, ex);

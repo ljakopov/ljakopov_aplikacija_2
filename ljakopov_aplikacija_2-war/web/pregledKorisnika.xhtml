@@ -23,10 +23,15 @@
                 </ui:define>
 
                 <ui:define name="content">
+                    <h:panelGrid id="greske">
+                        #{korisnik.greske}
+                    </h:panelGrid>
                     <h:form>
                         <h:panelGrid columns="2" cellpadding="7">
                             <h:outputLabel value="#{m.pregledKorisnika_id}" />
                             <p:inputText id="id" value="#{korisnik.id}" readonly="true"/>
+                            <h:outputLabel value="#{m.pregledKorisnika_id}" />
+                            <p:inputText id="korisnickoImeAzriranje" value="#{korisnik.korisnickoIme}"/>
                             <h:outputText value="#{m.pregledKorisnika_lozinka}" />
                             <p:password id="lozinka" value="#{korisnik.lozinka}" feedback="true" />
                             <h:outputLabel value="#{m.pregledKorisnika_lozinkaPonovljena}" />
@@ -35,7 +40,7 @@
                             <p:inputText id="prezime" value="#{korisnik.prezime}"/>
                             <h:outputLabel value="#{m.pregledKorisnika_email}" />
                             <p:inputText id="email" value="#{korisnik.email}"/>
-                            <p:commandButton value="#{m.pregledKorisnika_spremi}" action="#{korisnik.azurirajPodatkeKorisnika()}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+                            <h:commandButton value="#{m.pregledKorisnika_spremi}" action="#{korisnik.azurirajPodatkeKorisnika()}" /> 
                         </h:panelGrid>
                     </h:form>
                     <p:dataTable id="popisKorisnika" value="#{korisnik.podaciSvihKorisnika}" var="podaci" 

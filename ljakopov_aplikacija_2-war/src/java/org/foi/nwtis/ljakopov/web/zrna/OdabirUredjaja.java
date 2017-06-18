@@ -23,7 +23,10 @@ import javax.json.JsonReader;
 import org.foi.nwtis.ljakopov.rest.klijenti.MeteoRest;
 import org.foi.nwtis.ljakopov.rest.klijenti.MeteoRestId;
 import org.foi.nwtis.ljakopov.web.podaci.Lokacija;
+import org.foi.nwtis.ljakopov.web.podaci.SesijaKorisnika;
 import org.foi.nwtis.ljakopov.web.podaci.Uredjaj;
+import org.foi.nwtis.ljakopov.ws.klijenti.MeteoWsKlijent;
+import org.foi.nwtis.ljakopov.ws.serveri.MeteoPodaci;
 
 /**
  *
@@ -40,6 +43,7 @@ public class OdabirUredjaja implements Serializable {
         preuzmiSveUredjaje();
     }
 
+    private MeteoPodaci meteoPodaci = new MeteoPodaci();
     private List<Uredjaj> uredjaji = new ArrayList<>();
     private String id;
     private int idUredjaja;
@@ -50,6 +54,8 @@ public class OdabirUredjaja implements Serializable {
     private String noviId;
     private String noviNaziv;
     private String noviAdresa;
+    private String adresaUredjaja;
+    private boolean prikazIspisAdrese = false;
 
     public List<Uredjaj> getUredjaji() {
         return uredjaji;
@@ -131,6 +137,30 @@ public class OdabirUredjaja implements Serializable {
         this.noviAdresa = noviAdresa;
     }
 
+    public MeteoPodaci getMeteoPodaci() {
+        return meteoPodaci;
+    }
+
+    public void setMeteoPodaci(MeteoPodaci meteoPodaci) {
+        this.meteoPodaci = meteoPodaci;
+    }
+
+    public String getAdresaUredjaja() {
+        return adresaUredjaja;
+    }
+
+    public void setAdresaUredjaja(String adresaUredjaja) {
+        this.adresaUredjaja = adresaUredjaja;
+    }
+
+    public boolean isPrikazIspisAdrese() {
+        return prikazIspisAdrese;
+    }
+
+    public void setPrikazIspisAdrese(boolean prikazIspisAdrese) {
+        this.prikazIspisAdrese = prikazIspisAdrese;
+    }
+
     public void preuzmiSveUredjaje() {
         uredjaji.clear();
         String jsonSviUredjaji = MeteoRest.preuzmiSveUredjaje();
@@ -196,6 +226,35 @@ public class OdabirUredjaja implements Serializable {
             } else {
                 greska = text.getString("uredjaji_neUsjesnoDodavanje");
             }
+        }
+    }
+
+    public void dajAdresu() {
+        if (id != null) {
+            prikazIspisAdrese = true;
+            String lat;
+            String lon;
+            String jsonUredjaj = MeteoRestId.dohvatiUredjaj(this.id);
+            JsonReader reader = Json.createReader(new StringReader(jsonUredjaj));
+            System.out.println("OVO JE JSON : " + jsonUredjaj);
+            JsonArray array = reader.readArray();
+
+            lat = array.getJsonObject(0).getString("lat");
+            lon = array.getJsonObject(0).getString("lon");
+            adresaUredjaja = MeteoWsKlijent.dajAdresuNaTemeljuLatLon(SesijaKorisnika.dajKorisnickoIme(), SesijaKorisnika.dajKorisnickuLozinku(), lat, lon);
+            System.out.println("OVO JE ADRESA; " + adresaUredjaja);
+        }
+    }
+
+    public void dajVazecePodatke() {
+        if (id != null) {
+            meteoPodaci = MeteoWsKlijent.dajMeteoPodatkeZaUredjaj(SesijaKorisnika.dajKorisnickoIme(), SesijaKorisnika.dajKorisnickuLozinku(), Integer.parseInt(this.id));
+        }
+    }
+
+    public void dajZadnjiPodatakZaUredjaj() {
+        if (id != null) {
+            meteoPodaci = MeteoWsKlijent.dajZadnjiMeteoPodatakZaUredjaj(SesijaKorisnika.dajKorisnickoIme(), SesijaKorisnika.dajKorisnickuLozinku(), Integer.parseInt(this.id));
         }
     }
 

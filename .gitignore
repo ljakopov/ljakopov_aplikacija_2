@@ -20,3 +20,9 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/ljakopov_aplikacija_2-ejb/build/
+/ljakopov_aplikacija_2-war/build/
+/build/
+/ljakopov_aplikacija_2-ejb/dist/
+/dist/
+/ljakopov_aplikacija_2-war/dist/

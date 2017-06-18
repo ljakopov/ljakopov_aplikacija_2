@@ -17,6 +17,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
+import javax.servlet.http.HttpSession;
 import org.foi.nwtis.ljakopov.rest.klijenti.UserRest;
 import org.foi.nwtis.ljakopov.rest.klijenti.UserRestKorisnickoIme;
 import org.foi.nwtis.ljakopov.web.podaci.KorisnikPodaci;
@@ -39,6 +40,7 @@ public class Korisnik implements Serializable {
     int korisniciPoStranici = 7;
     private String dobivenaLozinka;
     private String greske;
+    private String korisnickoIme;
 
     /**
      * Creates a new instance of Korisnik
@@ -111,6 +113,14 @@ public class Korisnik implements Serializable {
     public void setGreske(String greske) {
         this.greske = greske;
     }
+    
+    public String getKorisnickoIme() {
+        return korisnickoIme;
+    }
+
+    public void setKorisnickoIme(String korisnickoIme) {
+        this.korisnickoIme = korisnickoIme;
+    }
 
     public void preuzmiSveKorisnike() {
         //System.out.println("SESIJA JE: " + SesijaKorisnika.dajKorisnickoIme());
@@ -131,8 +141,7 @@ public class Korisnik implements Serializable {
         JsonArray array = reader.readArray();
         System.out.println(json);
         id = Integer.toString(array.getJsonObject(0).getInt("id"));
-        //lozinka = array.getJsonObject(0).getString("pass");
-        //ponovljenaLozinka = array.getJsonObject(0).getString("pass");
+        korisnickoIme = array.getJsonObject(0).getString("username");
         dobivenaLozinka = array.getJsonObject(0).getString("pass");
         email = array.getJsonObject(0).getString("email");
         prezime = array.getJsonObject(0).getString("prezime");
@@ -140,11 +149,11 @@ public class Korisnik implements Serializable {
     }
 
     private boolean provjeraUpisanihPodataka() {
-        return !(email.isEmpty() || prezime.isEmpty());
+        return !(email.isEmpty() || prezime.isEmpty() || korisnickoIme.isEmpty());
     }
 
     private boolean provjeraLozinkeIPonovljeneLozinke() {
-        return !(lozinka.isEmpty() || ponovljenaLozinka.isEmpty());
+        return !(lozinka.isEmpty() && ponovljenaLozinka.isEmpty());
     }
 
     //TODO dodati prikaz greški
@@ -152,10 +161,13 @@ public class Korisnik implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ResourceBundle text = ResourceBundle.getBundle("org.foi.nwtis.ljakopov.i18n", context.getViewRoot().getLocale());
         if (provjeraUpisanihPodataka()) {
+            System.out.println("ISPIS: " + id + " " + lozinka + " " + email + " " + korisnickoIme);
             if (provjeraLozinkeIPonovljeneLozinke()) {
+                System.out.println("LOZINKE");
                 if (lozinka.equals(ponovljenaLozinka)) {
                     System.out.println("LOZIKE SU ISTE");
                     JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+                    jsonObjectBuilder.add("username", korisnickoIme);
                     jsonObjectBuilder.add("pass", lozinka);
                     jsonObjectBuilder.add("prezime", prezime);
                     jsonObjectBuilder.add("email", email);
@@ -163,30 +175,37 @@ public class Korisnik implements Serializable {
                     if ("1".equals(dobiveniOdgovor)) {
                         greske = text.getString("pregledKorisnika_azuriranjeUspjesno");
                         preuzmiSveKorisnike();
+                        HttpSession session = SesijaKorisnika.dodajSesiju();
+                        session.setAttribute("korisnickoIme", korisnickoIme);
+                        session.setAttribute("lozinka", lozinka);
                     } else {
                         greske = text.getString("pregledKorisnika_azuriranjeNeuspjesno");
                     }
                 } else {
-                    greske = text.getString("pregledKorisnika_azuriranjeUspjesno");
+                    greske = text.getString("pregledKorisnika_nisuLozinkaIPonovljenaNisuIste");
                 }
             } else {
                 JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-                jsonObjectBuilder.add("pass", dobivenaLozinka);
+                jsonObjectBuilder.add("username", korisnickoIme);
+                jsonObjectBuilder.add("pass", SesijaKorisnika.dajKorisnickuLozinku());
                 jsonObjectBuilder.add("prezime", prezime);
                 jsonObjectBuilder.add("email", email);
                 String dobiveniOdgovor = UserRestKorisnickoIme.azurirajKorisnikaJson(SesijaKorisnika.dajKorisnickoIme(), jsonObjectBuilder.build());
                 if ("1".equals(dobiveniOdgovor)) {
                     greske = text.getString("pregledKorisnika_azuriranjeUspjesno");
-                    //System.out.println("SVE JE DOBRO");
                     preuzmiSveKorisnike();
+                    HttpSession session = SesijaKorisnika.dodajSesiju();
+                    session.setAttribute("korisnickoIme", korisnickoIme);
+                    //session.setAttribute("lozinka", lozinka);
                 } else {
                     greske = text.getString("pregledKorisnika_azuriranjeNeuspjesno");
                 }
             }
         } else {
             greske = text.getString("pregledKorisnika_emailIPrezimeNijeUpisano");
-
         }
     }
+
+
 
 }

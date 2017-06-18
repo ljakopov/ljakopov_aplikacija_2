@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <f:view locale="#{lokalizacija.odabraniJezik}">
+        <h:head>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+        </h:head>
+        <body>
+            <div class="container-fluid">
+
+                <ui:composition template="./predlozak.xhtml">
+
+                    <ui:define name="naslov">
+                        #{m.pregledPoruka_naslov}
+                    </ui:define>
+
+                    <ui:define name="top">
+                        <h1>#{m.pregledPoruka_naslov}</h1>
+                    </ui:define>
+
+                    <ui:define name="left">
+                        left
+                    </ui:define>
+
+                    <ui:define name="content">
+                        <h:form>
+                            <h:outputLabel value="#{m.pregledPoruka_labelaOdaberiMapu}" />
+                            <h:selectOneMenu value="#{pregledPoruka.odabranaMapa}">
+                                <f:selectItems value="#{pregledPoruka.mape}" var="f" 
+                                               itemLabel="#{f.labela} - #{f.vrijednost}" itemValue="#{f.labela}"/>
+                            </h:selectOneMenu>
+                            <h:commandButton value="#{m.pregledPoruka_gumbPromjeni}" action="#{pregledPoruka.promjenaMape()}"/>
+                            <h:commandButton value="#{m.pregledPoruka_labelaObrisi}" action="#{pregledPoruka.obrisiPoruke()}"/>
+                        </h:form>
+                        <p:dataTable id="poruke" value="#{pregledPoruka.poruke}" var="p" 
+                                     rows="8" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}
+                                     {RowsPerPageDropdown}">
+
+                            <p:column>
+                                <f:facet name="header">#{m.pregledPoruka_labelaID}</f:facet>
+                                <h:outputText value="#{p.id}" />   
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">#{m.pregledPoruka_labelaŠalje}</f:facet>
+                                <h:outputText value="#{p.salje}" />   
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">#{m.pregledPoruka_labelaPredmet}</f:facet>
+                                <h:outputText value="#{p.predmet}" />  
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">#{m.pregledPoruka_labelaVrijemeSlanja}</f:facet>
+                                <h:outputText value="#{p.vrijemeSlanja}" />   
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">#{m.pregledPoruka_labelaSadrzaj}</f:facet>
+                                <h:outputText value="#{p.sadrzaj}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </ui:define>
+
+                    <ui:define name="bottom">
+                        bottom
+                    </ui:define>
+
+                </ui:composition>
+            </div>
+
+        </body>
+    </f:view>
+</html>
