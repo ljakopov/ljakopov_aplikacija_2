@@ -24,11 +24,15 @@
                     </ui:define>
 
                     <ui:define name="left">
-                        left
+                        <h:link value="#{m.navigacija_promjenaJezika}" outcome="jezik" /><br/>
+                        <h:link value="#{m.navigacija_korisnik}" outcome="korisnici" /><br/>
+                        <h:link value="#{m.navigacija_uredjaji}" outcome="uredjaji" /><br/>
+                        <h:link value="#{m.navigacija_serverSocket}" outcome="serversocket" /><br/>
+                        <h:link value="#{m.navigacija_promjenaPoruka}" outcome="poruke" /><br/>
                     </ui:define>
 
                     <ui:define name="content">
-                           <h:form>
+                        <h:form>
                             <h:commandButton value="#{m.iotMaster_iotMasterLoad}" action="#{upravljanjeIoTMasterom.iotMasterLoad()}">
                                 <f:ajax />
                             </h:commandButton>
@@ -41,7 +45,7 @@
                         </h:form>
                         <div class="ui-g">
                             <div class="ui-g-4">
-                                <p:panelGrid columns="1" layout="grid" id="ispisUredjaja">
+                                <p:panelGrid columns="1" id="ispisUredjaja">
                                     <h:dataTable value="#{upravljanjeIoTMasterom.listaUredjaji}" var="uredjaj" class="table table-striped">
                                         <h:column>
                                             <f:facet name="header">#{m.iotMaster_iotMasterLabela_Id}</f:facet>
@@ -65,10 +69,21 @@
                                         </h:selectOneListbox>
                                     </h:panelGrid>
                                     <br />
-                                    <h:commandButton value="#{m.iotMaster_iotMasterWorkID}" action="#{upravljanjeIoTMasterom.iotMasterWorkUredjaj()}"/>
-                                    <h:commandButton value="#{m.iotMaster_iotMasterWaitID}" action="#{upravljanjeIoTMasterom.iotMasterWaitUredjaj()}"/>
-                                    <h:commandButton value="#{m.iotMaster_iotMasterRemoveID}" action="#{upravljanjeIoTMasterom.iotMasterRemoveUredjaj()}"/>
-                                    <h:commandButton value="#{m.iotMaster_iotMasterStatusID}" action="#{upravljanjeIoTMasterom.iotMasterStatusUredjaj()}"/>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterWorkID}" action="#{upravljanjeIoTMasterom.iotMasterWorkUredjaj()}">
+                                        <f:ajax execute="uredjaji"/>
+                                    </h:commandButton>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterWaitID}" action="#{upravljanjeIoTMasterom.iotMasterWaitUredjaj()}">
+                                        <f:ajax execute="uredjaji"/>
+                                    </h:commandButton>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterRemoveID}" action="#{upravljanjeIoTMasterom.iotMasterRemoveUredjaj()}">
+                                        <f:ajax execute="uredjaji"/>
+                                    </h:commandButton>
+                                    <h:commandButton value="#{m.iotMaster_iotMasterStatusID}" action="#{upravljanjeIoTMasterom.iotMasterStatusUredjaj()}">
+                                        <f:ajax execute="uredjaji" render="@all"/>
+                                    </h:commandButton>
+                                    <h:panelGrid id="statusPrikaz" rendered="#{serverSocketIoTMaster.prikazIotMaster}">
+                                        #{upravljanjeIoTMasterom.odgovorServisaPrikaz}
+                                    </h:panelGrid>
                                 </h:form>
                             </div>
                             <div class="ui-g-4">
@@ -83,7 +98,9 @@
                                         <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
                                         <h:inputText id="noviAdresa" value="#{upravljanjeIoTMasterom.noviAdresa}" />
                                         <h:outputText value="" />
-                                        <h:commandButton value="Dodaj IoT Uređaj" action="#{upravljanjeIoTMasterom.iotMasterAddUredjaj()}" />
+                                        <h:commandButton value="Dodaj IoT Uređaj" action="#{upravljanjeIoTMasterom.iotMasterAddUredjaj()}" >
+                                            <f:ajax execute="noviId noviNaziv noviAdresa"/>
+                                        </h:commandButton>
                                     </h:panelGrid>
                                 </h:form>
                             </div>

@@ -38,12 +38,17 @@ public class Lokalizacija implements Serializable {
     }
 
     public String getOdabraniJezik() {
+        System.out.println("TU SMO");
         //FacesContext FC = FacesContext.getCurrentInstance();
         UIViewRoot UVIR = FacesContext.getCurrentInstance().getViewRoot();
         if (UVIR != null) {
             Locale lokalniJezik = FacesContext.getCurrentInstance().getViewRoot().getLocale();
             odabraniJezik = lokalniJezik.getLanguage();
         }
+        if(odabraniJezik==null){
+            odabraniJezik = "hr";
+        }
+        System.out.println("ODABRANI JEZIK: " + odabraniJezik);
         return odabraniJezik;
     }
 
@@ -57,9 +62,9 @@ public class Lokalizacija implements Serializable {
         return izbornikJezika;
     }
 
-    public Object odaberiJezik() {
+    public String odaberiJezik() {
         setOdabraniJezik(odabraniJezik);
-        return "PromjenaJezika";
+        return "korisnik";
     }
 
 }

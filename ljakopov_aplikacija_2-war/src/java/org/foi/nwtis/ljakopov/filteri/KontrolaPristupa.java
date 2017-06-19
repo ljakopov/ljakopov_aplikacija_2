@@ -117,7 +117,7 @@ public class KontrolaPristupa implements Filter {
         String reqURI = reqt.getRequestURI();
 
         Throwable problem = null;
-        if (reqURI.contains("/registracijaIPrijava.xhtml")
+        if (reqURI.contains("/registracijaIPrijava.xhtml") || reqURI.contains("/index.xhtml")
                 || (ses != null && ses.getAttribute("korisnickoIme") != null)
                 || reqURI.contains("javax.faces.resource")) {
             try {

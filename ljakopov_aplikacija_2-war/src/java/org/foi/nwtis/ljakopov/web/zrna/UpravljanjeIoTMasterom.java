@@ -40,6 +40,8 @@ public class UpravljanjeIoTMasterom implements Serializable {
     private String noviId;
     private String noviNaziv;
     private String noviAdresa;
+    private boolean prikazIotMaster = false;
+    private String odgovorServisaPrikaz;
 
     /**
      * Creates a new instance of UpravljanjeIoTMasterom
@@ -103,6 +105,22 @@ public class UpravljanjeIoTMasterom implements Serializable {
         this.noviAdresa = noviAdresa;
     }
 
+    public boolean isPrikazIotMaster() {
+        return prikazIotMaster;
+    }
+
+    public void setPrikazIotMaster(boolean prikazIotMaster) {
+        this.prikazIotMaster = prikazIotMaster;
+    }
+
+    public String getOdgovorServisaPrikaz() {
+        return odgovorServisaPrikaz;
+    }
+
+    public void setOdgovorServisaPrikaz(String odgovorServisaPrikaz) {
+        this.odgovorServisaPrikaz = odgovorServisaPrikaz;
+    }
+
     public void iotMasterList() {
         listaUredjaji.clear();
         String odgovorServisa = "";
@@ -135,6 +153,7 @@ public class UpravljanjeIoTMasterom implements Serializable {
 
     public void iotMasterWorkUredjaj() {
         //System.out.println("OVO JE ID: " + idUredjaString);
+        prikazIotMaster = false;
         String odgovorServisa = "";
         String work = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.idUredjaString + " WORK;";
         odgovorServisa = posaljiNaredbu(work);
@@ -142,6 +161,7 @@ public class UpravljanjeIoTMasterom implements Serializable {
 
     public void iotMasterWaitUredjaj() {
         //System.out.println("OVO JE ID: " + idUredjaString);
+        prikazIotMaster = false;
         String odgovorServisa = "";
         String wait = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.idUredjaString + " WAIT;";
         odgovorServisa = posaljiNaredbu(wait);
@@ -149,6 +169,7 @@ public class UpravljanjeIoTMasterom implements Serializable {
 
     public void iotMasterRemoveUredjaj() {
         //System.out.println("OVO JE ID: " + idUredjaString);
+        prikazIotMaster = false;
         String odgovorServisa = "";
         String remove = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.idUredjaString + " REMOVE;";
         odgovorServisa = posaljiNaredbu(remove);
@@ -156,16 +177,17 @@ public class UpravljanjeIoTMasterom implements Serializable {
 
     public void iotMasterStatusUredjaj() {
         //System.out.println("OVO JE ID: " + idUredjaString);
+        prikazIotMaster = true;
         String odgovorServisa = "";
         String status = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.idUredjaString + " STATUS;";
-        odgovorServisa = posaljiNaredbu(status);
+        odgovorServisaPrikaz = posaljiNaredbu(status);
     }
 
     public void iotMasterAddUredjaj() {
         //System.out.println("OVO JE : " + noviId + " " + noviNaziv + " " + noviAdresa);
         String odgovorServisa = "";
         String add = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.noviId + " ADD " + '"' + this.noviNaziv
-               + '"' + " " + '"' + this.noviAdresa + '"' + ";";
+                + '"' + " " + '"' + this.noviAdresa + '"' + ";";
         System.out.println("ISPIS ADD: " + add);
         odgovorServisa = posaljiNaredbu(add);
 

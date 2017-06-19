@@ -25,7 +25,11 @@
                     </ui:define>
 
                     <ui:define name="left">
-                        left
+                        <h:link value="#{m.navigacija_promjenaJezika}" outcome="jezik" /><br/>
+                        <h:link value="#{m.navigacija_korisnik}" outcome="korisnici" /><br/>
+                        <h:link value="#{m.navigacija_serverSocket}" outcome="serverSocket" /><br/>
+                        <h:link value="#{m.navigacija_iotMaster}" outcome="iotmaster" /><br/>
+                        <h:link value="#{m.navigacija_promjenaPoruka}" outcome="poruke" /><br/>
                     </ui:define>
 
                     <ui:define name="content">
@@ -43,7 +47,7 @@
                                 <h:outputLabel for="noviAdresa" value="#{m.uredjaji_adresa}"/>
                                 <h:inputText id="noviAdresa" value="#{odabirUredjaja.noviAdresa}" />
                                 <h:outputText value="" />
-                                <h:commandButton value="Dodaj IoT Uređaj" 
+                                <h:commandButton value="#{m.uredjaji_addNew}" 
                                                  action="#{odabirUredjaja.dodajIoTUredaj()}">
                                     <f:ajax execute="noviId noviNaziv noviAdresa" render="uredjaji greske" />
                                 </h:commandButton>
@@ -87,7 +91,9 @@
                                         <h:commandButton value="#{m.uredjaji_pogledajVazecePodatkeUredjaja}" action="#{odabirUredjaja.dajVazecePodatke()}" >
                                             <f:ajax execute="uredjaji" render="vrijemeZaUredjaj" />
                                         </h:commandButton>
-                                        <h:commandButton value="#{m.uredjaji_pogledajZadnjiPodatak}" action="#{odabirUredjaja.dajZadnjiPodatakZaUredjaj()}" />
+                                        <h:commandButton value="#{m.uredjaji_pogledajZadnjiPodatak}" action="#{odabirUredjaja.dajZadnjiPodatakZaUredjaj()}" >
+                                            <f:ajax execute="uredjaji" render="vrijemeZaUredjaj" />
+                                        </h:commandButton>
                                     </h:panelGrid>
                                 </div>
                                 <div class="ui-g-4">
@@ -102,13 +108,14 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
-                                            <th>Username</th>
+                                            <th>#{m.uredjaji_temprature}</th>
+                                            <th>#{m.uredjaji_maxTemprature}</th>
+                                            <th>#{m.uredjaji_minTemprature}</th>
+                                            <th>#{m.uredjaji_vlaznost}</th>
+                                            <th>#{m.uredjaji_tlak}</th>
+                                            <th>#{m.uredjaji_vjetar}</th>
+                                            <th>#{m.uredjaji_vrijeme}</th>
+                                            <th>#{m.uredjaji_preuzeto}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

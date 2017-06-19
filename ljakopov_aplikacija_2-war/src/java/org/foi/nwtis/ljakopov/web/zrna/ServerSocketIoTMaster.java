@@ -34,6 +34,8 @@ public class ServerSocketIoTMaster implements Serializable {
     }
 
     String status;
+    private boolean prikaz = false;
+    private boolean prikazIotMaster = false;
 
     public String getStatus() {
         return status;
@@ -43,22 +45,42 @@ public class ServerSocketIoTMaster implements Serializable {
         this.status = status;
     }
 
+    public boolean isPrikaz() {
+        return prikaz;
+    }
+
+    public void setPrikaz(boolean prikaz) {
+        this.prikaz = prikaz;
+    }
+
+    public boolean isPrikazIotMaster() {
+        return prikazIotMaster;
+    }
+
+    public void setPrikazIotMaster(boolean prikazIotMaster) {
+        this.prikazIotMaster = prikazIotMaster;
+    }
+
     public void start() {
+        prikaz = false;
         String start = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; START;";
         posaljiNaredbu(start);
     }
 
     public void pause() {
+        prikaz = false;
         String pause = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; PAUSE;";
         posaljiNaredbu(pause);
     }
 
     public void stop() {
+        prikaz = false;
         String stop = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; STOP;";
         posaljiNaredbu(stop);
     }
 
     public void status() {
+        prikaz = true;
         String status = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; STATUS;";
         posaljiNaredbu(status);
     }
@@ -67,26 +89,31 @@ public class ServerSocketIoTMaster implements Serializable {
      * dio rezervaran za IoT_Master web servis
      */
     public void iotMasterStart() {
+        prikazIotMaster = false;
         String start = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master START;";
         posaljiNaredbu(start);
     }
 
     public void iotMasterStop() {
+        prikazIotMaster = false;
         String stop = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master STOP;";
         posaljiNaredbu(stop);
     }
 
     public void iotMasterWork() {
+        prikazIotMaster = false;
         String work = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master WORK;";
         posaljiNaredbu(work);
     }
 
     public void iotMasterWait() {
+        prikazIotMaster = false;
         String wait = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master WAIT;";
         posaljiNaredbu(wait);
     }
 
     public void iotMasterStatus() {
+        prikazIotMaster = true;
         String status = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master STATUS;";
         posaljiNaredbu(status);
     }
