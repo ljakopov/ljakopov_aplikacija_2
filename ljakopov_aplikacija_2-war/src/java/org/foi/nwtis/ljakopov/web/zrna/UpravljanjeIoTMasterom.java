@@ -178,6 +178,7 @@ public class UpravljanjeIoTMasterom implements Serializable {
     public void iotMasterStatusUredjaj() {
         //System.out.println("OVO JE ID: " + idUredjaString);
         prikazIotMaster = true;
+        System.out.println("OVO JE PRIKAZ: " + prikazIotMaster);
         String odgovorServisa = "";
         String status = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT " + this.idUredjaString + " STATUS;";
         odgovorServisaPrikaz = posaljiNaredbu(status);

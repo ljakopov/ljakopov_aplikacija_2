@@ -33,9 +33,9 @@ public class ServerSocketIoTMaster implements Serializable {
     public ServerSocketIoTMaster() {
     }
 
-    String status;
+    private String status;
     private boolean prikaz = false;
-    private boolean prikazIotMaster = false;
+    private boolean prikazIotMaster;
 
     public String getStatus() {
         return status;
@@ -89,25 +89,21 @@ public class ServerSocketIoTMaster implements Serializable {
      * dio rezervaran za IoT_Master web servis
      */
     public void iotMasterStart() {
-        prikazIotMaster = false;
         String start = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master START;";
         posaljiNaredbu(start);
     }
 
     public void iotMasterStop() {
-        prikazIotMaster = false;
         String stop = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master STOP;";
         posaljiNaredbu(stop);
     }
 
     public void iotMasterWork() {
-        prikazIotMaster = false;
         String work = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master WORK;";
         posaljiNaredbu(work);
     }
 
     public void iotMasterWait() {
-        prikazIotMaster = false;
         String wait = "USER " + SesijaKorisnika.dajKorisnickoIme() + "; PASSWD " + SesijaKorisnika.dajKorisnickuLozinku() + "; IoT_Master WAIT;";
         posaljiNaredbu(wait);
     }

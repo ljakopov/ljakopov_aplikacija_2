@@ -173,7 +173,7 @@ public class Registracija {
         return !(prijavaKorisnickoIme.isEmpty() || prijavaLozinka.isEmpty());
     }
 
-    public void logiranje() {
+    public Object logiranje() {
         FacesContext context = FacesContext.getCurrentInstance();
         ResourceBundle text = ResourceBundle.getBundle("org.foi.nwtis.ljakopov.i18n", context.getViewRoot().getLocale());
         if (provjeriUpisanePodatke()) {
@@ -190,6 +190,7 @@ public class Registracija {
                     session.setAttribute("korisnickoIme", prijavaKorisnickoIme);
                     session.setAttribute("lozinka", prijavaLozinka);
                     System.out.println("ISPIS SESIJE: " + SesijaKorisnika.dajKorisnickoIme());
+                    return "pregledKorisnika";
                 }
             } else {
                 greska = text.getString("registracija_PrijavaNijeUspjela");
@@ -197,5 +198,13 @@ public class Registracija {
         } else {
             greska = text.getString("registracija_nisuUpisaniPassIKorisnickoIme");
         }
+        return "";
+    }
+    
+    public Object odjava(){
+        System.out.println("BRISANJE");
+        HttpSession session = SesijaKorisnika.dodajSesiju();
+        session.invalidate();
+        return "registracija";
     }
 }

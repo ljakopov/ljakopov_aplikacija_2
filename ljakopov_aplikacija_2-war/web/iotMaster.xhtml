@@ -29,6 +29,7 @@
                         <h:link value="#{m.navigacija_uredjaji}" outcome="uredjaji" /><br/>
                         <h:link value="#{m.navigacija_serverSocket}" outcome="serversocket" /><br/>
                         <h:link value="#{m.navigacija_promjenaPoruka}" outcome="poruke" /><br/>
+                        <h:link value="#{m.navigacija_login}" outcome="registracijaIPrijava" /><br/>
                     </ui:define>
 
                     <ui:define name="content">
@@ -69,21 +70,21 @@
                                         </h:selectOneListbox>
                                     </h:panelGrid>
                                     <br />
+                                    <h:panelGrid id="statusPrikaz">
+                                        <h:inputText id="nekiodgovor" value="#{upravljanjeIoTMasterom.odgovorServisaPrikaz}" rendered="#{serverSocketIoTMaster.prikazIotMaster}"/>
+                                    </h:panelGrid>
                                     <h:commandButton value="#{m.iotMaster_iotMasterWorkID}" action="#{upravljanjeIoTMasterom.iotMasterWorkUredjaj()}">
-                                        <f:ajax execute="uredjaji"/>
+                                        <f:ajax execute="uredjaji panelGridIspisSvihUredjaja"/>
                                     </h:commandButton>
                                     <h:commandButton value="#{m.iotMaster_iotMasterWaitID}" action="#{upravljanjeIoTMasterom.iotMasterWaitUredjaj()}">
-                                        <f:ajax execute="uredjaji"/>
+                                        <f:ajax execute="uredjaji panelGridIspisSvihUredjaja"/>
                                     </h:commandButton>
                                     <h:commandButton value="#{m.iotMaster_iotMasterRemoveID}" action="#{upravljanjeIoTMasterom.iotMasterRemoveUredjaj()}">
-                                        <f:ajax execute="uredjaji"/>
+                                        <f:ajax execute="uredjaji panelGridIspisSvihUredjaja"/>
                                     </h:commandButton>
                                     <h:commandButton value="#{m.iotMaster_iotMasterStatusID}" action="#{upravljanjeIoTMasterom.iotMasterStatusUredjaj()}">
-                                        <f:ajax execute="uredjaji" render="@all"/>
+                                        <!--<f:ajax execute="uredjaji" render="statusPrikaz"/>-->
                                     </h:commandButton>
-                                    <h:panelGrid id="statusPrikaz" rendered="#{serverSocketIoTMaster.prikazIotMaster}">
-                                        #{upravljanjeIoTMasterom.odgovorServisaPrikaz}
-                                    </h:panelGrid>
                                 </h:form>
                             </div>
                             <div class="ui-g-4">

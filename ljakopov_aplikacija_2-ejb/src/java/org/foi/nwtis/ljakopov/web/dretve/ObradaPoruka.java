@@ -50,6 +50,7 @@ public class ObradaPoruka extends Thread {
 
         while (!prekid_obrade) {
             try {
+                long pocetak = System.currentTimeMillis();
                 java.util.Properties properties = System.getProperties();
                 properties.put("mail.smtp.host", SingSessionBean.server);
                 Session session = Session.getInstance(properties, null);
@@ -85,7 +86,8 @@ public class ObradaPoruka extends Thread {
                 folderZaSpremanjeIspravnihPoruka.close(true);
                 folder.close(true);
                 store.close();
-                sleep(SingSessionBean.intervalDretve * 1000);
+                long kraj = System.currentTimeMillis();
+                sleep((SingSessionBean.intervalDretve * 1000) - (kraj - pocetak));
 
             } catch (NoSuchProviderException ex) {
                 Logger.getLogger(ObradaPoruka.class.getName()).log(Level.SEVERE, null, ex);
